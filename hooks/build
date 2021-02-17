@@ -12,6 +12,11 @@ echo "VCS_REF: ${VCS_REF}"
 
 printenv
 
-docker build --build-arg BUILD_DATE=${BUILD_DATE} \
+docker buildx create --use
+
+docker buildx ls
+
+docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 \
+  --build-arg BUILD_DATE=${BUILD_DATE} \
   --build-arg VCS_REF=${VCS_REF} \
-  -t $IMAGE_NAME .
+  --tag $IMAGE_NAME .
